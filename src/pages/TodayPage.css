@@ -1,0 +1,169 @@
+.today-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.today-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  padding: 0 var(--space-2);
+}
+
+.today-header .icon-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+}
+
+.today-header .icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.today-title-group {
+  text-align: center;
+}
+
+.today-title-group h2 {
+  font-size: var(--fs-3xl);
+  margin-bottom: var(--space-1);
+}
+
+.today-subtitle {
+  color: var(--text-secondary);
+}
+
+.today-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+}
+
+.today-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.today-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Focus Area Banner */
+.focus-area-banner {
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(124, 58, 237, 0.05) 100%);
+  border-left: 4px solid var(--accent-primary);
+}
+
+.focus-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.focus-header h3 {
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.focus-icon {
+  color: var(--accent-primary);
+}
+
+.edit-btn {
+  margin-left: auto;
+  opacity: 0.5;
+}
+
+.focus-area-banner:hover .edit-btn {
+  opacity: 1;
+}
+
+.focus-text {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+  line-height: var(--lh-tight);
+}
+
+.focus-edit-mode {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.focus-input {
+  font-size: var(--fs-xl);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+}
+
+/* Journal Card */
+.journal-card {
+  padding: var(--space-6);
+}
+
+.journal-prompt {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+  font-style: italic;
+}
+
+.journal-textarea {
+  min-height: 120px;
+  background: var(--bg-hover);
+  border-color: transparent;
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-4);
+}
+
+.journal-textarea:focus {
+  background: var(--bg-elevated);
+  border-color: var(--accent-primary);
+}
+
+.journal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.journal-view-mode {
+  background: var(--bg-hover);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 1px solid transparent;
+}
+
+.journal-view-mode:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-default);
+}
+
+.journal-text-display {
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+  .today-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .focus-text {
+    font-size: var(--fs-xl);
+  }
+}

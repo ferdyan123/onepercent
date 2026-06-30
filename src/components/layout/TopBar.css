@@ -1,0 +1,74 @@
+.topbar {
+  height: var(--topbar-height);
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  z-index: var(--z-sticky);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.mobile-menu-btn {
+  display: none;
+  color: var(--text-primary);
+}
+
+.page-title {
+  font-size: var(--fs-xl);
+  margin: 0;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.icon-btn {
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.notification-btn {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--danger);
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+}
+
+@media (max-width: 767px) {
+  .topbar {
+    padding: 0 var(--space-4);
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+  }
+}

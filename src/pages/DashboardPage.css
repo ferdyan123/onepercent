@@ -1,0 +1,261 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.welcome-header {
+  margin-bottom: var(--space-2);
+}
+
+.welcome-title {
+  margin-bottom: var(--space-1);
+}
+
+.welcome-date {
+  color: var(--text-secondary);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+}
+
+.dashboard-col-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.dashboard-top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.dashboard-col-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.dashboard-card {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.card-header h3 {
+  font-size: var(--fs-lg);
+}
+
+/* Daily Progress Card */
+.daily-progress-card {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.daily-progress-info h3 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-1);
+}
+
+.daily-progress-info p {
+  font-size: var(--fs-sm);
+}
+
+/* Habit Streaks Card */
+.streaks-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.streak-item {
+  background: var(--bg-hover);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+}
+
+.streak-habit-name {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.streak-count {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--accent-warm);
+  font-weight: var(--fw-bold);
+}
+
+/* Today Tasks Card */
+.today-tasks-card {
+  flex: 1;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  transition: all var(--transition-base);
+}
+
+.task-item:hover {
+  border-color: var(--border-strong);
+}
+
+.task-item.completed {
+  opacity: 0.6;
+}
+
+.task-details {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-title.strikethrough {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-category-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.empty-tasks {
+  text-align: center;
+  padding: var(--space-6) 0;
+  color: var(--text-muted);
+}
+
+/* Weekly Progress Chart */
+.bar-chart-container {
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: var(--space-4);
+  position: relative;
+}
+
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.bar-bg {
+  width: 32px;
+  height: 120px;
+  background: var(--bg-hover);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.bar-fill {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  transition: height 1s ease-in-out;
+}
+
+.bar-label {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.goal-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-strong);
+  border-top: 1px dashed var(--text-muted);
+}
+
+.goal-text {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.weekly-avg {
+  color: var(--text-secondary);
+  font-weight: var(--fw-medium);
+}
+
+/* Goal Summary Card */
+.goal-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.goal-title-small {
+  font-size: var(--fs-base);
+}
+
+.goal-percentage {
+  color: var(--accent-primary);
+  font-weight: var(--fw-bold);
+}
+
+.goal-status-text {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  align-self: flex-end;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-top-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .bar-bg {
+    width: 24px;
+  }
+}

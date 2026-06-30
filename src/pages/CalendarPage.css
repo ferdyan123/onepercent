@@ -1,0 +1,230 @@
+.calendar-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: var(--space-2);
+}
+
+.page-header h1 {
+  font-size: var(--fs-3xl);
+  margin-bottom: var(--space-1);
+}
+
+.calendar-main-card {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Header Nav */
+.calendar-header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.current-month-label {
+  font-size: var(--fs-2xl);
+  min-width: 200px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Legend */
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legend-box {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+}
+
+/* Grid Wrapper */
+.calendar-grid-wrapper {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.calendar-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.day-name-col {
+  padding: var(--space-3);
+  text-align: center;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--bg-secondary);
+  gap: 1px; /* Creates borders between cells */
+}
+
+.calendar-cell {
+  background: var(--bg-primary);
+  min-height: 100px;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-base);
+}
+
+.calendar-cell.empty {
+  background: var(--bg-hover);
+}
+
+.calendar-cell:not(.empty):hover {
+  background: var(--bg-elevated);
+}
+
+.cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.cell-date {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.is-today .cell-date {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.perfect-day-icon {
+  color: var(--success);
+}
+
+.cell-details {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+.habit-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.habit-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Intensity Classes (GitHub contribution style) */
+.intensity-none {
+  background: var(--bg-hover);
+}
+
+.calendar-cell.intensity-low {
+  background: rgba(124, 58, 237, 0.1);
+}
+.legend-box.intensity-low {
+  background: rgba(124, 58, 237, 0.3);
+}
+
+.calendar-cell.intensity-med {
+  background: rgba(124, 58, 237, 0.25);
+}
+.legend-box.intensity-med {
+  background: rgba(124, 58, 237, 0.6);
+}
+
+.calendar-cell.intensity-high {
+  background: rgba(124, 58, 237, 0.4);
+}
+.legend-box.intensity-high {
+  background: var(--accent-primary);
+}
+
+/* Stats Row */
+.calendar-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.stat-card {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stat-card h4 {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+}
+
+.text-accent {
+  color: var(--accent-primary);
+}
+
+@media (max-width: 768px) {
+  .calendar-stats-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendar-cell {
+    min-height: 60px;
+    padding: var(--space-1);
+  }
+  
+  .current-month-label {
+    min-width: auto;
+    font-size: var(--fs-lg);
+  }
+}
