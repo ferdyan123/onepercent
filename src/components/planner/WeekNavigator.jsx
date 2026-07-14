@@ -2,7 +2,7 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 
-export default function WeekNavigator({ weekNumber, onPrevWeek, onNextWeek, onCurrentWeek }) {
+export default function WeekNavigator({ weekNumber, weekLabel, onPrevWeek, onNextWeek, onCurrentWeek }) {
   const { t } = useTranslation();
   
   return (
@@ -13,7 +13,7 @@ export default function WeekNavigator({ weekNumber, onPrevWeek, onNextWeek, onCu
         </button>
         <h2 className="current-week-label">
           {t('planner.weekLabel', { week: weekNumber })}
-          <span className="week-date-range"> • Jun 16-22</span> {/* Dummy date range for now */}
+          {weekLabel && <span className="week-date-range"> • {weekLabel}</span>}
         </h2>
         <button className="icon-btn" onClick={onNextWeek}>
           <ChevronRight size={20} />

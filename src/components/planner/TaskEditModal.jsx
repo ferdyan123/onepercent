@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from '../common/Modal';
 import Button from '../common/Button';
 import { useTranslation } from '../../hooks/useTranslation';
 import { CATEGORIES } from '../../utils/constants';
 
-export default function TaskEditModal({ isOpen, onClose, task, onSave }) {
+// Rendered with a `key={task.id}` at the call site so it remounts cleanly
+// per task, avoiding a setState-in-effect sync bug.
+export default function TaskEditModal({ isOpen, onClose, task, onSave, onDelete }) {
   const { t } = useTranslation();
   const [editedTask, setEditedTask] = useState(task || { title: '', notes: '', category: '' });
-
-  useEffect(() => {
-    if (task) {
-      setEditedTask(task);
-    }
-  }, [task]);
 
   if (!task) return null;
 
@@ -66,9 +62,14 @@ export default function TaskEditModal({ isOpen, onClose, task, onSave }) {
           />
         </div>
 
-        <div className="modal-actions" style={{ marginTop: 'var(--space-6)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)' }}>
-          <Button variant="ghost" type="button" onClick={onClose}>{t('common.cancel')}</Button>
-          <Button type="submit">{t('common.save')}</Button>
+        <div className="modal-actions" style={{ marginTop: 'var(--space-6)', display: 'flex', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
+          <Button variant="ghost" type="button" className="text-danger" onClick={() => onDelete(task.id)}>
+            Delete
+          </Button>
+          <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
+            <Button variant="ghost" type="button" onClick={onClose}>{t('common.cancel')}</Button>
+            <Button type="submit">{t('common.save')}</Button>
+          </div>
         </div>
       </form>
     </Modal>

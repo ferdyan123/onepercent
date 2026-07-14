@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 import { useTranslation } from '../hooks/useTranslation';
-import { formatDate } from '../utils/dateUtils';
+import { formatDate, getDateKeyForOffset } from '../utils/dateUtils';
 import FocusAreaBanner from '../components/today/FocusAreaBanner';
 import JournalEntry from '../components/today/JournalEntry';
 import TodayTasksCard from '../components/dashboard/TodayTasksCard';
@@ -11,28 +12,30 @@ import './TodayPage.css';
 
 export default function TodayPage() {
   const { t } = useTranslation();
-  
-  // Dummy Data for demonstration
-  const [focusArea, setFocusArea] = useState('Trading Strategy Backtesting');
-  const [journal, setJournal] = useState('I feel highly motivated today to finish all my tasks.');
+  const { state, dispatch } = useContext(AppContext);
+
   const [currentDateOffset, setCurrentDateOffset] = useState(0); // 0 = today, -1 = yesterday
-  
-  const displayDate = new Date();
-  displayDate.setDate(displayDate.getDate() + currentDateOffset);
-  
+  const selectedDateKey = getDateKeyForOffset(currentDateOffset);
   const isToday = currentDateOffset === 0;
 
-  const demoTasks = [
-    { id: '1', title: 'Morning Meditation', completed: true },
-    { id: '2', title: 'Read 20 Pages', completed: true },
-    { id: '3', title: '30min Workout', completed: false, categoryColor: 'var(--accent-primary)' }
-  ];
+  const displayDate = new Date();
+  displayDate.setDate(displayDate.getDate() + currentDateOffset);
 
-  const demoHabits = [
-    { id: 'h1', name: 'Workout' },
-    { id: 'h2', name: 'Reading' },
-    { id: 'h3', name: 'Deep Work' }
-  ];
+  // Real data scoped to the selected date
+  const dayTasks = state.tasks.filter(t => t.date === selectedDateKey);
+  const entry = state.journal.find(j => j.date === selectedDateKey) || {};
+
+  const handleToggleTask = (id) => {
+    dispatch({ type: 'TOGGLE_TASK', payload: id });
+  };
+
+  const handleSaveFocusArea = (focusArea) => {
+    dispatch({ type: 'UPSERT_JOURNAL_ENTRY', payload: { date: selectedDateKey, focusArea } });
+  };
+
+  const handleSaveJournal = (journalText) => {
+    dispatch({ type: 'UPSERT_JOURNAL_ENTRY', payload: { date: selectedDateKey, journalText } });
+  };
 
   return (
     <div className="today-page-container animate-fade-in">
@@ -55,20 +58,21 @@ export default function TodayPage() {
 
       <div className="today-grid">
         <div className="today-main-col">
-          <FocusAreaBanner focusArea={focusArea} onSave={setFocusArea} />
+          {/* key={selectedDateKey} remounts these fresh whenever the user
+              navigates to a different day, instead of syncing via effect */}
+          <FocusAreaBanner key={`focus-${selectedDateKey}`} focusArea={entry.focusArea} onSave={handleSaveFocusArea} />
           
           <div className="today-tasks-wrapper animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            <TodayTasksCard tasks={demoTasks} onToggle={() => {}} />
+            <TodayTasksCard tasks={dayTasks} onToggle={handleToggleTask} />
           </div>
           
-          <JournalEntry journalText={journal} onSave={setJournal} />
+          <JournalEntry key={`journal-${selectedDateKey}`} journalText={entry.journalText} onSave={handleSaveJournal} />
         </div>
         
         <div className="today-side-col">
           <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-             <HabitStreaksCard habits={demoHabits} />
+             <HabitStreaksCard habits={state.habits} />
           </div>
-          {/* Notes or other widgets could go here */}
         </div>
       </div>
     </div>

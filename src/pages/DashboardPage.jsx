@@ -7,29 +7,23 @@ import TodayTasksCard from '../components/dashboard/TodayTasksCard';
 import WeeklyProgressChart from '../components/dashboard/WeeklyProgressChart';
 import GoalProgressCard from '../components/dashboard/GoalProgressCard';
 import DailyProgressLineChart from '../components/dashboard/DailyProgressLineChart';
+import { getToday } from '../utils/dateUtils';
+import { isDoneToday } from '../utils/habitUtils';
 
 import './DashboardPage.css';
 
 export default function DashboardPage() {
   const { state, dispatch } = useContext(AppContext);
 
-  // Generate some dummy tasks if empty for demo purposes
-  const demoTasks = [
-    { id: '1', title: 'Morning Meditation', completed: true },
-    { id: '2', title: 'Read 20 Pages', completed: true },
-    { id: '3', title: '30min Workout', completed: false, categoryColor: 'var(--accent-primary)' },
-    { id: '4', title: 'Project Focus', completed: false },
-    { id: '5', title: 'Drink Water', completed: false }
-  ];
+  const today = getToday();
+  // Tasks that are actually scheduled for today (from Weekly Planner / Today page)
+  const todayTasks = state.tasks.filter(t => t.date === today);
 
-  const tasks = state.tasks.length > 0 ? state.tasks : demoTasks;
-  const habits = state.habits;
+  const totalHabits = state.habits.length;
+  const completedHabits = state.habits.filter(h => isDoneToday(h.completions)).length;
 
   const handleToggleTask = (id) => {
-    // If it's a real task from state
-    if (state.tasks.find(t => t.id === id)) {
-      dispatch({ type: 'TOGGLE_TASK', payload: id });
-    }
+    dispatch({ type: 'TOGGLE_TASK', payload: id });
   };
 
   return (
@@ -40,14 +34,14 @@ export default function DashboardPage() {
         <div className="dashboard-col-main">
           <DailyProgressLineChart />
           <div className="dashboard-top-row">
-            <DailyProgressCard completedHabits={2} totalHabits={5} />
-            <HabitStreaksCard habits={habits} />
+            <DailyProgressCard completedHabits={completedHabits} totalHabits={totalHabits} />
+            <HabitStreaksCard habits={state.habits} />
           </div>
           <WeeklyProgressChart />
         </div>
         
         <div className="dashboard-col-side">
-          <TodayTasksCard tasks={tasks} onToggle={handleToggleTask} />
+          <TodayTasksCard tasks={todayTasks} onToggle={handleToggleTask} />
           <GoalProgressCard goals={state.goals} />
         </div>
       </div>

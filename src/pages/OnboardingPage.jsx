@@ -55,12 +55,14 @@ export default function OnboardingPage() {
     dispatch({ type: 'ADD_GOAL', payload: newGoal });
 
     // Save the habits
-    onboardingData.habits.forEach(habitName => {
+    const habitColors = ['#3B82F6', '#10B981', '#EF4444', '#F59E0B', '#8B5CF6', '#EC4899'];
+    onboardingData.habits.forEach((habitName, index) => {
       dispatch({ 
         type: 'ADD_HABIT', 
         payload: {
           id: crypto.randomUUID(),
           name: habitName,
+          color: habitColors[index % habitColors.length],
           icon: 'circle', // simplified for now
           completions: {},
           createdAt: new Date().toISOString()

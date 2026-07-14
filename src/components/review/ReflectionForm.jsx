@@ -2,23 +2,30 @@ import React, { useState } from 'react';
 import Card from '../common/Card';
 import Button from '../common/Button';
 
-export default function ReflectionForm() {
-  const [wentWell, setWentWell] = useState('');
-  const [improve, setImprove] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+// Rendered with key={weekStart} at the call site so it remounts cleanly
+// whenever the reviewed week changes, instead of syncing via effect.
+export default function ReflectionForm({ weekStart, existingReview, onSave }) {
+  const [wentWell, setWentWell] = useState(existingReview?.wentWell || '');
+  const [improve, setImprove] = useState(existingReview?.improve || '');
+  const [isEditing, setIsEditing] = useState(!existingReview);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    onSave({ weekStart, wentWell, improve, savedAt: new Date().toISOString() });
+    setIsEditing(false);
   };
 
-  if (isSubmitted) {
+  if (!isEditing && existingReview) {
     return (
       <Card className="reflection-card success animate-fade-in">
         <div className="reflection-success-content">
           <h3>Reflection Saved!</h3>
           <p className="text-secondary">Great job taking the time to review your week. You are 1% better.</p>
-          <Button onClick={() => setIsSubmitted(false)} variant="ghost" style={{ marginTop: 'var(--space-4)' }}>
+          <div style={{ textAlign: 'left', marginTop: 'var(--space-4)', width: '100%' }}>
+            <p className="text-secondary" style={{ marginBottom: 'var(--space-2)' }}><strong>What went well:</strong> {existingReview.wentWell}</p>
+            <p className="text-secondary"><strong>What to improve:</strong> {existingReview.improve}</p>
+          </div>
+          <Button onClick={() => setIsEditing(true)} variant="ghost" style={{ marginTop: 'var(--space-4)' }}>
             Edit Reflection
           </Button>
         </div>
