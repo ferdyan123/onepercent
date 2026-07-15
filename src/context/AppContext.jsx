@@ -8,7 +8,11 @@ const initialState = {
   habits: [],
   goals: [],
   reviews: [],
-  journal: []
+  journal: [],
+  settings: {
+    notificationsEnabled: false,
+    reminders: { morning: true, afternoon: true, night: true }
+  }
 };
 
 // Derive a status label from progress so it always stays consistent
@@ -130,6 +134,12 @@ function appReducer(state, action) {
       }
       return { ...state, journal };
     }
+
+    // ── SETTINGS ───────────────────────────────
+    // payload: { notificationsEnabled?, reminders? } — shallow-merges into
+    // settings (reminders object itself is replaced wholesale, not merged).
+    case 'UPDATE_SETTINGS':
+      return { ...state, settings: { ...state.settings, ...action.payload } };
 
     default:
       return state;

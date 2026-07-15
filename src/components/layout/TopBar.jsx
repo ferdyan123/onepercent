@@ -1,14 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Bell, Menu, Sun, Moon } from 'lucide-react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { AppContext } from '../../context/AppContext';
 import { useTranslation } from '../../hooks/useTranslation';
+import { getToday } from '../../utils/dateUtils';
+import { isDoneToday } from '../../utils/habitUtils';
 import './TopBar.css';
 
 export default function TopBar() {
   const location = useLocation();
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { state } = useContext(AppContext);
   const { t } = useTranslation();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const panelRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) setIsOpen(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const today = getToday();
+  const pendingTasks = state.tasks.filter(t => t.date === today && !t.completed);
+  const pendingHabits = state.habits.filter(h => !isDoneToday(h.completions));
+  const pendingCount = pendingTasks.length + pendingHabits.length;
 
   const getPageTitle = () => {
     const path = location.pathname;
@@ -37,10 +58,44 @@ export default function TopBar() {
         <button className="icon-btn" onClick={toggleTheme} aria-label="Toggle theme">
           {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
         </button>
-        <button className="icon-btn notification-btn" aria-label="Notifications">
-          <Bell size={20} />
-          <span className="notification-badge"></span>
-        </button>
+
+        <div className="notification-wrapper" ref={panelRef}>
+          <button
+            className="icon-btn notification-btn"
+            aria-label="Notifications"
+            onClick={() => setIsOpen(prev => !prev)}
+          >
+            <Bell size={20} />
+            {pendingCount > 0 && <span className="notification-badge"></span>}
+          </button>
+
+          {isOpen && (
+            <div className="notification-panel glass-card-static animate-fade-in">
+              <h4 className="notification-panel-title">Today</h4>
+
+              {pendingCount === 0 ? (
+                <p className="text-secondary notification-empty">
+                  You're all caught up for today. 🎉
+                </p>
+              ) : (
+                <ul className="notification-list">
+                  {pendingTasks.slice(0, 4).map(t => (
+                    <li key={t.id}>{t.title}</li>
+                  ))}
+                  {pendingHabits.slice(0, 4).map(h => (
+                    <li key={h.id}>Check off: {h.name}</li>
+                  ))}
+                </ul>
+              )}
+
+              {!state.settings.notificationsEnabled && (
+                <Link to="/settings" className="notification-cta" onClick={() => setIsOpen(false)}>
+                  Turn on reminders →
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

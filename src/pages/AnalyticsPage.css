@@ -1,0 +1,105 @@
+.analytics-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Overview stats row */
+.analytics-overview-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.analytics-stat-card {
+  padding: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.analytics-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.analytics-stat-value {
+  display: block;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.analytics-stat-label {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+/* Shared card wrapper for chart-like sections */
+.analytics-card {
+  padding: var(--space-5);
+}
+
+.analytics-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Habit / goal horizontal bar rows (reused by HabitPerformanceChart & GoalsOverview) */
+.habit-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.habit-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.habit-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+
+.habit-bar-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg-tertiary, rgba(255, 255, 255, 0.06));
+  overflow: hidden;
+}
+
+.habit-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+@media (max-width: 900px) {
+  .analytics-overview-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .analytics-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-overview-row {
+    grid-template-columns: 1fr;
+  }
+}

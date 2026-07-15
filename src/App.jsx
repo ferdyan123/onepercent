@@ -5,7 +5,6 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AppProvider } from './context/AppContext';
 
 import AppLayout from './components/layout/AppLayout';
-import PlaceholderPage from './components/common/PlaceholderPage';
 
 import DashboardPage from './pages/DashboardPage';
 import GoalsPage from './pages/GoalsPage';
@@ -14,11 +13,9 @@ import CalendarPage from './pages/CalendarPage';
 import TodayPage from './pages/TodayPage';
 import HabitsPage from './pages/HabitsPage';
 import ReviewPage from './pages/ReviewPage';
+import AnalyticsPage from './pages/AnalyticsPage';
+import SettingsPage from './pages/SettingsPage';
 import OnboardingPage from './pages/OnboardingPage';
-
-// Placeholder Pages for unbuilt ones
-const AnalyticsPage = () => <PlaceholderPage title="Analytics" />;
-const SettingsPage = () => <PlaceholderPage title="Settings" />;
 
 function App() {
   return (

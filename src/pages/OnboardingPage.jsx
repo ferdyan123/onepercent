@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from '../hooks/useTranslation';
 import { AppContext } from '../context/AppContext';
 import { Sparkles } from 'lucide-react';
 
@@ -13,7 +12,6 @@ import StepComplete from '../components/onboarding/StepComplete';
 import './OnboardingPage.css';
 
 export default function OnboardingPage() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
   
@@ -68,6 +66,12 @@ export default function OnboardingPage() {
           createdAt: new Date().toISOString()
         }
       });
+    });
+
+    // Save the reminder preferences (previously collected but never saved)
+    dispatch({
+      type: 'UPDATE_SETTINGS',
+      payload: { reminders: onboardingData.reminders }
     });
 
     // Complete onboarding

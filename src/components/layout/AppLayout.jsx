@@ -4,10 +4,13 @@ import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import BottomNav from './BottomNav';
 import { AppContext } from '../../context/AppContext';
+import { useNotificationScheduler } from '../../hooks/useNotificationScheduler';
 import './AppLayout.css';
 
 export default function AppLayout() {
   const { state } = useContext(AppContext);
+
+  useNotificationScheduler(state.settings);
 
   // If user hasn't completed onboarding, redirect to onboarding
   if (!state.user.isOnboarded) {
